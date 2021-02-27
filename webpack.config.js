@@ -15,6 +15,7 @@ module.exports = {
   devServer: {
     contentBase: path.resolve("./build"),
     index: "index.html",
+    host:"0.0.0.0",
     port: 9000,
     // 변경 사항 자동 적용을 위한 설정입니다
   },
