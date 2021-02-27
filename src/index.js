@@ -1,28 +1,37 @@
 import cytoscape from "cytoscape";
 import "./style.css";
-// webpack으로 묶어줘야 하니 css파일을 진입점인 index.js 에 import 합니다
+
+const createClick = () => {
+  var fromText = document.getElementById("from").value;
+  var toText = document.getElementById("to").value;
+
+  
+};
+
+document.querySelector("#btnCreate").addEventListener("click", createClick);
 
 var cy = cytoscape({
-  container: document.getElementById("cy"), // container to render in
+  container: document.getElementById("cy"),
 
   elements: [
-    // list of graph elements to start with
     {
-      // node a
       data: { id: "a" },
     },
     {
-      // node b
       data: { id: "b" },
     },
     {
-      // edge ab
       data: { id: "ab", source: "a", target: "b" },
+    },
+    {
+      data: { id: "c" },
+    },
+    {
+      data: { id: "ac", source: "a", target: "c" },
     },
   ],
 
   style: [
-    // the stylesheet for the graph
     {
       selector: "node",
       style: {
@@ -35,6 +44,7 @@ var cy = cytoscape({
       selector: "edge",
       style: {
         width: 3,
+        "curve-style": "bezier",
         "line-color": "#ccc",
         "target-arrow-color": "#ccc",
         "target-arrow-shape": "triangle",
@@ -43,7 +53,6 @@ var cy = cytoscape({
   ],
 
   layout: {
-    name: "grid",
-    rows: 5,
+    name: "cose",
   },
 });
