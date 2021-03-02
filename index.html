@@ -9,11 +9,15 @@
 </head>
 
 <body>
-    <div class="input_box">
+    <div class="create_input_box">
         <input id="from" type="text" class="form-control" placeholder="FROM">
         <input id="to" type="text" class="form-control" placeholder="TO">
         <button type='button' class="btn btn-success" id="btnCreate">CREATE</button>
         <button type='button' class="btn btn-danger"  id="btnDelete">DELETE</button>
+    </div>
+    <div class="update_input_box" visibility="collapse">
+        <input id="nodeId" type="text" class="form-control">
+        <button type='button' class="btn btn-warning" id="btnUpdate">UPDATE</button>
     </div>
     <div id="cy"></div>
 </body>

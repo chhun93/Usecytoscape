@@ -1,35 +1,19 @@
 import cytoscape from "cytoscape";
 import "./style.css";
 
-var nodeData = [
-  {
-    data: { id: "a" },
-  },
-  {
-    data: { id: "b" },
-  },
-  {
-    data: { id: "ab", source: "a", target: "b" },
-  },
-  {
-    data: { id: "c" },
-  },
-  {
-    data: { id: "ac", source: "a", target: "c" },
-  },
-];
+var clickedNode = "";
 
 var cy = cytoscape({
   container: document.getElementById("cy"),
 
-  elements: nodeData,
+  elements: [{ data: { id: "1", label: "ROOT" } }],
 
   style: [
     {
       selector: "node",
       style: {
         "background-color": "#666",
-        label: "data(id)",
+        label: "data(label)",
       },
     },
 
@@ -50,13 +34,32 @@ var cy = cytoscape({
   },
 });
 
+cy.on("click", "node", function (evt) {
+  clickedNode = this.nodes();
+  console.log(clickedNode);
+  console.log(clickedNode.data.label);
+  var updateInput = document.getElementById("nodeId");
+  updateInput.value = clickedNode.id();
+});
+
+const updateClick = () => {
+  if (clickedNode === "") return;
+
+  var updateInput = document.getElementById("nodeId");
+  updateInput.value = clickedNode.label();
+
+  clickedNode = "";
+  updateInput.value = "";
+};
+
 const createClick = () => {
   const fromText = document.getElementById("from").value;
   const toText = document.getElementById("to").value;
 
   if (fromText === "" || toText === "") return;
   var chk = false;
-  for(var i in cy.nodes){
+
+  for (var i in cy.nodes) {
     console.log(i);
     console.log(cy.nodes[i]);
   }
@@ -81,3 +84,4 @@ const createClick = () => {
 };
 
 document.querySelector("#btnCreate").addEventListener("click", createClick);
+document.querySelector("#btnUpdate").addEventListener("click", updateClick);
