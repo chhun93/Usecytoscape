@@ -1,6 +1,7 @@
 import cytoscape from "cytoscape";
 import "./style.css";
 
+var nodeCount = 1;
 var clickedNode = "";
 
 var cy = cytoscape({
@@ -36,51 +37,56 @@ var cy = cytoscape({
 
 cy.on("click", "node", function (evt) {
   clickedNode = this.nodes();
-  console.log(clickedNode);
-  console.log(clickedNode.data.label);
-  var updateInput = document.getElementById("nodeId");
-  updateInput.value = clickedNode.id();
+
+  var updateInputId = document.getElementById("nodeId");
+  updateInputId.value = clickedNode.id();
+  var fromInputId = document.getElementById("fromId");
+  fromInputId.value = clickedNode.id();
+
+  var updateInputLabel = document.getElementById("nodeLabel");
+  updateInputLabel.value = clickedNode.label;
+  var fromInputLabel = document.getElementById("fromLabel");
+  fromInputLabel.value = clickedNode.label;
+
+  document.getElementsByClassName("update_input_box")[0].style.display = "";
 });
 
 const updateClick = () => {
   if (clickedNode === "") return;
 
-  var updateInput = document.getElementById("nodeId");
-  updateInput.value = clickedNode.label();
-
   clickedNode = "";
-  updateInput.value = "";
 };
 
 const createClick = () => {
-  const fromText = document.getElementById("from").value;
-  const toText = document.getElementById("to").value;
+  nodeCount++;
+  var fromText = document.getElementById("fromLabel").value;
+  var toText = document.getElementById("toLabel").value;
+
+  var fromId = document.getElementById("fromId").value;
 
   if (fromText === "" || toText === "") return;
-  var chk = false;
 
-  for (var i in cy.nodes) {
-    console.log(i);
-    console.log(cy.nodes[i]);
-  }
-  if (chk) {
-    cy.add([
-      { group: "nodes", data: { id: `${toText}` } },
-      {
-        group: "edges",
-        data: { id: `${fromText}${toText}`, source: fromText, target: toText },
-      },
-    ]);
-    const layout = ct.layout({
-      name: "cose",
-    });
-    layout.run();
-  } else {
-    alert("잘못된 입력입니다.");
-    document.getElementById("from").value = "";
-    document.getElementById("to").value = "";
-    return;
-  }
+  document.getElementById("toId").value = nodeCount;
+  var toId = document.getElementById("toId").value;
+
+  cy.add([
+    { group: "nodes", data: { id: `${toId}`,label:`${toText}` } },
+    {
+      group: "edges",
+      data: { id: `${fromId}${toId}`, source: fromId, target: toId },
+    },
+  ]);
+  const layout = cy.layout({
+    name: "cose",
+  });
+
+  layout.run();
+
+  document.getElementsByClassName("update_input_box").style.display="none";
+  fromId="";
+  toId="";
+  fromText="";
+  toText="";
 };
 
 document.querySelector("#btnCreate").addEventListener("click", createClick);

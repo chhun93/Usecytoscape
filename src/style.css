@@ -7,23 +7,18 @@ input {
     border: 3px solid black;
 }
 
-.edit_box {
-    margin-bottom: 8px;
-    text-align: center;
-}
-
 .form-control {
     width: inherit;
     display: inline;
     border: solid black;
 }
 
-.btn {
-    margin-bottom: 2px;
-}
 #cy {
     margin: 10px;
     border: 2px solid black;
     padding: 0px;
     height: 70%;
+}
+#fromId, #toId, #nodeId{
+    display: none;
 }

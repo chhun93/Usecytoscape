@@ -10,12 +10,15 @@
 
 <body>
     <div class="create_input_box">
-        <input id="from" type="text" class="form-control" placeholder="FROM">
-        <input id="to" type="text" class="form-control" placeholder="TO">
+        <input id="fromLabel" type="text" class="form-control" placeholder="FROM">
+        <input id="toLabel" type="text" class="form-control" placeholder="TO">
+        <input id="fromId" type="text">
+        <input id="toId" type="text" >
         <button type='button' class="btn btn-success" id="btnCreate">CREATE</button>
         <button type='button' class="btn btn-danger"  id="btnDelete">DELETE</button>
     </div>
-    <div class="update_input_box" visibility="collapse">
+    <div class="update_input_box" style="display:none">
+        <input id="nodeLabel" type="text" class="form-control">
         <input id="nodeId" type="text" class="form-control">
         <button type='button' class="btn btn-warning" id="btnUpdate">UPDATE</button>
     </div>
