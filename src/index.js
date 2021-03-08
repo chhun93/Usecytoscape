@@ -38,22 +38,33 @@ var cy = cytoscape({
 cy.on("click", "node", function (evt) {
   clickedNode = this.nodes();
 
-  var updateInputId = document.getElementById("nodeId");
-  updateInputId.value = clickedNode.id();
   var fromInputId = document.getElementById("fromId");
   fromInputId.value = clickedNode.id();
+  var updateInputId = document.getElementById("nodeId");
+  updateInputId.value = clickedNode.id();
 
-  var updateInputLabel = document.getElementById("nodeLabel");
-  updateInputLabel.value = clickedNode.label;
   var fromInputLabel = document.getElementById("fromLabel");
-  fromInputLabel.value = clickedNode.label;
+  fromInputLabel.value = clickedNode.data('label');
+  var updateInputLabel = document.getElementById("nodeLabel");
+  updateInputLabel.value = clickedNode.data('label');
 
   document.getElementsByClassName("update_input_box")[0].style.display = "";
 });
 
 const updateClick = () => {
   if (clickedNode === "") return;
+  
+  document.getElementsByClassName("update_input_box")[0].style.display = "none";
 
+  var fromInputId = document.getElementById("fromId");
+  fromInputId.value = "";
+  var updateInputId = document.getElementById("nodeId");
+  updateInputId.value = "";
+
+  var fromInputLabel = document.getElementById("fromLabel");
+  fromInputLabel.value = "";
+  var updateInputLabel = document.getElementById("nodeLabel");
+  clickedNode.data('label',`${updateInputLabel.value}`);
   clickedNode = "";
 };
 
