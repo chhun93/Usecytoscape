@@ -72,9 +72,9 @@ const createClick = () => {
   nodeCount++; 
 
   var fromText = document.getElementById("fromLabel").value;
-  var toText = document.getElementById("toLabel").value;
+  var toText   = document.getElementById("toLabel").value;
 
-  var fromId = document.getElementById("fromId").value;
+  var fromId   = document.getElementById("fromId").value;
 
   if (fromText === "" || toText === "") return;
 
@@ -95,11 +95,12 @@ const createClick = () => {
   layout.run();
 
   document.getElementsByClassName("update_input_box")[0].style.display="none";
-
-  fromId="";
-  toId="";
-  fromText="";
-  toText="";
+  
+  document.getElementById("fromLabel").value="";
+  document.getElementById("toLabel").value="";
+  document.getElementById("fromId").value="";
+  document.getElementById("toId").value="";
+  
   clickedNode = "";
 };
 

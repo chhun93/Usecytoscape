@@ -21,7 +21,7 @@ input {
 }
 
 #fromId, #toId{
-
+    display: none;
 }
 
 #nodeId{
