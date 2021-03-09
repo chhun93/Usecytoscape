@@ -7,7 +7,7 @@ var clickedNode = "";
 var cy = cytoscape({
   container: document.getElementById("cy"),
 
-  elements: [{ data: { id: "1", label: "ROOT" } }],
+  elements: [{ data: { id: "node1", label: "ROOT" } }],
 
   style: [
     {
@@ -69,7 +69,8 @@ const updateClick = () => {
 };
 
 const createClick = () => {
-  nodeCount++;
+  nodeCount++; 
+
   var fromText = document.getElementById("fromLabel").value;
   var toText = document.getElementById("toLabel").value;
 
@@ -81,10 +82,10 @@ const createClick = () => {
   var toId = document.getElementById("toId").value;
 
   cy.add([
-    { group: "nodes", data: { id: `${toId}`,label:`${toText}` } },
+    { group: "nodes", data: { id: `node${toId}`,label:`${toText}` } },
     {
       group: "edges",
-      data: { id: `${fromId}${toId}`, source: fromId, target: toId },
+      data: { id: `edge_${fromId}_${toId}`, source: fromId, target: `node${toId}` },
     },
   ]);
   const layout = cy.layout({
@@ -93,11 +94,13 @@ const createClick = () => {
 
   layout.run();
 
-  document.getElementsByClassName("update_input_box").style.display="none";
+  document.getElementsByClassName("update_input_box")[0].style.display="none";
+
   fromId="";
   toId="";
   fromText="";
   toText="";
+  clickedNode = "";
 };
 
 document.querySelector("#btnCreate").addEventListener("click", createClick);

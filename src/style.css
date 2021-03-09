@@ -19,6 +19,11 @@ input {
     padding: 0px;
     height: 70%;
 }
-#fromId, #toId, #nodeId{
+
+#fromId, #toId{
+
+}
+
+#nodeId{
     display: none;
 }
