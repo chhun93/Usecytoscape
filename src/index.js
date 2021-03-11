@@ -37,44 +37,53 @@ var cy = cytoscape({
 
 cy.on("click", "node", function (evt) {
   clickedNode = this.nodes();
-
+  console.log(clickedNode);
   var fromInputId = document.getElementById("fromId");
   fromInputId.value = clickedNode.id();
   var updateInputId = document.getElementById("nodeId");
   updateInputId.value = clickedNode.id();
 
   var fromInputLabel = document.getElementById("fromLabel");
-  fromInputLabel.value = clickedNode.data('label');
+  fromInputLabel.value = clickedNode.data("label");
   var updateInputLabel = document.getElementById("nodeLabel");
-  updateInputLabel.value = clickedNode.data('label');
+  updateInputLabel.value = clickedNode.data("label");
 
   document.getElementsByClassName("update_input_box")[0].style.display = "";
 });
 
-const updateClick = () => {
-  if (clickedNode === "") return;
-  
+const cleanInput=()=>{
   document.getElementsByClassName("update_input_box")[0].style.display = "none";
 
-  var fromInputId = document.getElementById("fromId");
-  fromInputId.value = "";
-  var updateInputId = document.getElementById("nodeId");
-  updateInputId.value = "";
+  document.getElementById("fromLabel").value = "";
+  document.getElementById("toLabel").value = "";
+  document.getElementById("fromId").value = "";
+  document.getElementById("toId").value = "";
 
-  var fromInputLabel = document.getElementById("fromLabel");
-  fromInputLabel.value = "";
-  var updateInputLabel = document.getElementById("nodeLabel");
-  clickedNode.data('label',`${updateInputLabel.value}`);
   clickedNode = "";
+}
+
+const updateClick = () => {
+  if (clickedNode === "") return;
+
+  var updateInputLabel = document.getElementById("nodeLabel");
+  clickedNode.data("label", `${updateInputLabel.value}`);
+
+  cleanInput();
+  const layout = cy.layout({
+    name: "cose",
+  });
+
+  layout.run();
+  
 };
 
 const createClick = () => {
-  nodeCount++; 
+  nodeCount++;
 
   var fromText = document.getElementById("fromLabel").value;
-  var toText   = document.getElementById("toLabel").value;
+  var toText = document.getElementById("toLabel").value;
 
-  var fromId   = document.getElementById("fromId").value;
+  var fromId = document.getElementById("fromId").value;
 
   if (fromText === "" || toText === "") return;
 
@@ -82,10 +91,14 @@ const createClick = () => {
   var toId = document.getElementById("toId").value;
 
   cy.add([
-    { group: "nodes", data: { id: `node${toId}`,label:`${toText}` } },
+    { group: "nodes", data: { id: `node${toId}`, label: `${toText}` } },
     {
       group: "edges",
-      data: { id: `edge_${fromId}_${toId}`, source: fromId, target: `node${toId}` },
+      data: {
+        id: `edge_${fromId}_${toId}`,
+        source: fromId,
+        target: `node${toId}`,
+      },
     },
   ]);
   const layout = cy.layout({
@@ -94,15 +107,20 @@ const createClick = () => {
 
   layout.run();
 
-  document.getElementsByClassName("update_input_box")[0].style.display="none";
+  cleanInput();
+};
+const deleteClick = () => {
+  if(clickedNode==="")
+    return;
+  cy.remove(clickedNode);
   
-  document.getElementById("fromLabel").value="";
-  document.getElementById("toLabel").value="";
-  document.getElementById("fromId").value="";
-  document.getElementById("toId").value="";
-  
-  clickedNode = "";
+  const layout = cy.layout({
+    name: "cose",
+  });
+  layout.run();
+  cleanInput();
 };
 
 document.querySelector("#btnCreate").addEventListener("click", createClick);
+document.querySelector("#btnDelete").addEventListener("click", deleteClick);
 document.querySelector("#btnUpdate").addEventListener("click", updateClick);
